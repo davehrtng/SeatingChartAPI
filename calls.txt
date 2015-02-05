@@ -1,0 +1,43 @@
+CRUD operations map to HTTP in expected way
+	create - put
+	read - get
+	update - post
+	delete - delete
+	
+Because the models are bundled discretely 
+
+GET /classes/1/students
+should return the same thing as
+GET /students/?class=1
+
+and GET /classes/1/rules
+should return the same thing as 
+GET /rules/?class=1
+
+the following are the top level url nouns
+
+/students
+/classes
+/seatingrules
+/seatingcharts
+
+Creating a single entity and multiple entities should be done with the same syntax, but
+different json
+
+e.g., to create a single student
+
+PUT /students
+
+{
+	lastName:Harting
+	firstName:David
+	classes:[1,2,3]
+}
+
+but to create multiple students
+
+PUT /students
+
+{
+	students:[{...}, {...}, {...}]
+}
