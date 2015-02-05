@@ -1,0 +1,34 @@
+Teacher / User:
+	name
+	email
+
+Student:
+	name
+	
+Class:
+	name
+	days of week
+	time
+	students
+	
+need some sort of authentication on class. Need to make sure teachers can only see their own classes. 
+	
+SeatingRules:
+	rule type
+	class
+	students
+	
+Seat
+	row
+	col
+	student
+	
+SeatingChart
+	class
+	numberOfRows
+	numberOfColumns
+	Seats
+	
+	
+	
+	
