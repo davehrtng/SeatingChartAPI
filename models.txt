@@ -11,6 +11,12 @@ Class:
 	time
 	students
 	
+I can't decide if it's better to have each class contain a list of students,
+or for each student to have a list of classes they are in. 
+I think the more common query would be - "show me all the students in class x", so 
+I'm leaning toward classes containing students. 
+	
+	
 need some sort of authentication on class. Need to make sure teachers can only see their own classes. 
 	
 SeatingRules:
