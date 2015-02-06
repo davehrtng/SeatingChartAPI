@@ -1,7 +1,7 @@
 # i guess the bulk of our routing will go here?
 # seems weird
 
-from flask import Flask, jsonify, make_response, request, url_for
+from flask import Flask, jsonify, make_response, request, url_for, abort
 
 from app import app
 
@@ -47,5 +47,9 @@ def make_public_student(student):
 	
 @app.errorhandler(404)
 def not_found(error):
-	return make_response(jsonify({'error': 'Not found'}), 404)
+	return make_response(jsonify({
+		'error': 'Not found',
+		'errorCode':404,
+		'displayableText':'The requested content could not be found'
+		}), 404)
 	
