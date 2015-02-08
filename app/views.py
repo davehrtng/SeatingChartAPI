@@ -66,16 +66,18 @@ def delete_student(student_id):
 def update_student(student_id):
 	old_student = [student for student in students if student['id'] == student_id]
 	
-	if(len(student)) == 0:
+	if(len(old_student)) == 0:
 		abort(404)
 		
-	posted_student = request.get_json()
+	posted_student = request.get_json(force=True)
 	
-	if 'firstName' not in posted_student and 'lastName' not in posted_student:
+	if 'firstName' not in posted_student or 'lastName' not in posted_student:
 		abort(400)
 	
-	student[0]['firstName'] = posted_student['firstName']
-	student[0]['lastName'] = posted_student['lastName']
+	old_student[0]['firstName'] = posted_student['firstName']
+	old_student[0]['lastName'] = posted_student['lastName']
+	
+	return jsonify({'student':old_student[0]})
 	
 def make_public_student(student):
 	new_student = {}
