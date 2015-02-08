@@ -60,6 +60,22 @@ def delete_student(student_id):
 		abort(404)
 	students.remove(student[0])
 	return jsonify({'result':True})
+
+# update student
+@app.route('/students/<int:student_id>', methods=['POST'])
+def update_student(student_id):
+	old_student = [student for student in students if student['id'] == student_id]
+	
+	if(len(student)) == 0:
+		abort(404)
+		
+	posted_student = request.get_json()
+	
+	if 'firstName' not in posted_student and 'lastName' not in posted_student:
+		abort(400)
+	
+	student[0]['firstName'] = posted_student['firstName']
+	student[0]['lastName'] = posted_student['lastName']
 	
 def make_public_student(student):
 	new_student = {}
