@@ -23,11 +23,13 @@ students = [
 	}
 ]
 
+# read all students
 @app.route('/students', methods=['GET'])
 def get_students():
 	# return all students
 	return jsonify({'students': [make_public_student(student) for student in students]})
 
+# read student by id
 @app.route('/students/<int:student_id>', methods=['GET'])
 def get_student(student_id):
 	#return student with given id
@@ -36,6 +38,7 @@ def get_student(student_id):
 		abort(404)
 	return jsonify({'student':student[0]})
 
+# create student
 @app.route('/students', methods=['POST'])
 def create_student():
 	#persist a new student
@@ -49,7 +52,14 @@ def create_student():
 	students.append(new_student)
 	return make_response(jsonify({'student':new_student}), 201)
 	
-	
+# delete student
+@app.route('/students/<int:student_id>', methods=['DELETE'])
+def delete_student(student_id):
+	student = [student for student in students if student['id'] == student_id]
+	if len(student) == 0: #no student with provided id
+		abort(404)
+	students.remove(student[0])
+	return jsonify({'result':True})
 	
 def make_public_student(student):
 	new_student = {}
