@@ -6,4 +6,4 @@ app = Flask(__name__)
 api = Api(app)
 
 
-api.add_resource(StudentApi, '/student/<int:id>', endpoint = 'student')
+api.add_resource(StudentApi, '/students/<int:id>', endpoint = 'student')
