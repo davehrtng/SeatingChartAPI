@@ -52,4 +52,9 @@ class StudentApi(Resource):
 		return {'student': marshal(student, student_fields)}
 		
 	def delete(self, id):
-		pass
+		student = [s for s in students if s['id'] == id]
+		if len(student) == 0:
+			abort(404) # did not find resource with matching id
+		students.remove(student[0])
+		return {'isRemoved':True}
+		
