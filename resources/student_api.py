@@ -1,7 +1,4 @@
-from flask import Flask
-from flask.ext.restful import Resource 
-from flask.ext.restful import reqparse
-from flask.ext.restful import fields, marshal
+from flask.ext.restful import Resource, reqparse, fields, marshal
 
 students = [
 	{
