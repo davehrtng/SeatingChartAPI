@@ -62,7 +62,7 @@ def delete_student(student_id):
 	return jsonify({'result':True})
 
 # update student
-@app.route('/students/<int:student_id>', methods=['POST'])
+@app.route('/students/<int:student_id>', methods=['PUT'])
 def update_student(student_id):
 	old_student = [student for student in students if student['id'] == student_id]
 	
