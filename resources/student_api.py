@@ -25,22 +25,32 @@ student_fields = {
 	'uri':fields.Url('student')
 }
 
-class StudentApi(Resource):
+class StudentsApi(Resource):
 	def __init__(self):
-		super(StudentApi, self).__init__()
+		self.reqparse = reqparse.RequestParser()
+		self.reqparse.add_argument('lastName', type = str, required = True, help = 'lastName field is required', location = 'json')
+		self.reqparse.add_argument('firstName', type = str, required = True, help = 'firstName field is required', location = 'json')
+		super(StudentsApi, self).__init__()
 		
 	def get(self):
-		pass
+		return {'students':[marshal(s, student_fields) for s in students]}
 		
 	def post(self):
-		pass
+		args = self.reqparse.parse_args()
+		student = {
+			'id': len(students) + 1,
+			'lastName':args['lastName'],
+			'firstName':args['firstName']
+		}
+		students.append(student)
+		return {'student':marshal(student, student_fields)}, 201
 	
-class StudentByIdApi(Resource):
+class StudentsByIdApi(Resource):
 	def __init__(self):
 		self.reqparse = reqparse.RequestParser()
 		self.reqparse.add_argument('lastName', type=str, required = False, help = 'lastName must be a string', location = 'json')
 		self.reqparse.add_argument('firstName', type=str, required = False, help = 'firstName must be a string', location = 'json')
-		super(StudentApi, self).__init__()
+		super(StudentsByIdApi, self).__init__()
 
 	def get(self, id):
 		student = [s for s in students if s['id'] == id]
