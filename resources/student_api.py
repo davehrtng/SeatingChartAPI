@@ -25,8 +25,17 @@ student_fields = {
 	'uri':fields.Url('student')
 }
 
-	
 class StudentApi(Resource):
+	def __init__(self):
+		super(StudentApi, self).__init__()
+		
+	def get(self):
+		pass
+		
+	def post(self):
+		pass
+	
+class StudentByIdApi(Resource):
 	def __init__(self):
 		self.reqparse = reqparse.RequestParser()
 		self.reqparse.add_argument('lastName', type=str, required = False, help = 'lastName must be a string', location = 'json')
