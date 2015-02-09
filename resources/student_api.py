@@ -1,4 +1,5 @@
 from flask.ext.restful import Resource, reqparse, fields, marshal
+from flask import abort
 
 students = [
 	{
@@ -33,7 +34,10 @@ class StudentApi(Resource):
 		super(StudentApi, self).__init__()
 
 	def get(self, id):
-		pass
+		student = [s for s in students if s['id'] == id]
+		if len(student) == 0:
+			abort(404) # did not find resource with matching id
+		return {'student': marshal(student[0], student_fields)}
 		
 	def put(self, id):
 		student = [s for s in students if s['id'] == id]
