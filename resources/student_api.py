@@ -34,7 +34,7 @@ class StudentsApi(Resource):
 		super(StudentsApi, self).__init__()
 		
 	def get(self):
-		return {'students':[marshal(s, student_fields) for s in students]}
+		return {'students':[marshal(s, student_fields) for s in student_collection.get_all()]}
 		
 	def post(self):
 		args = self.reqparse.parse_args()
