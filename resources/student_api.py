@@ -62,16 +62,14 @@ class StudentsByIdApi(Resource):
 		return {'student': marshal(student_list[0], student_fields)}
 		
 	def put(self, id):
-		student = [s for s in students if s['id'] == id]
-		if len(student) == 0:
-			abort(404)
-		student = student[0]
 		args = self.reqparse.parse_args()
-		print(args)
-		for k, v in args.items():
-			if v != None:
-				student[k] = v
-		return {'student': marshal(student, student_fields)}
+		result = student_collection.update({'id':id}, args)
+		if result['nMatched'] == 0:
+			return {'message':'No resources had the provided id'}, 400
+		elif ['nMOdified'] == 0:
+			return {'message':'Resource already matched your requested changes'}, 200
+		else:
+			return {}, 204
 		
 	def delete(self, id):
 		student = [s for s in students if s['id'] == id]
