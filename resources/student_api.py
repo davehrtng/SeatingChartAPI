@@ -56,10 +56,10 @@ class StudentsByIdApi(Resource):
 		super(StudentsByIdApi, self).__init__()
 
 	def get(self, id):
-		student = [s for s in students if s['id'] == id]
-		if len(student) == 0:
+		student_list = student_collection.get_by_field_value('id', id)
+		if len(student_list) == 0:
 			abort(404) # did not find resource with matching id
-		return {'student': marshal(student[0], student_fields)}
+		return {'student': marshal(student_list[0], student_fields)}
 		
 	def put(self, id):
 		student = [s for s in students if s['id'] == id]
