@@ -10,8 +10,8 @@ class MongoCollection:
 		self.collection = getattr(self.db, collection)
 	
 	def insert(self, document_dict):
-		"""Inserts a document represented by the parameter into the collection. Returns ObjectId of inserted document."""
-		return self.collection.insert(document_dict)
+		"""Inserts a document represented by the parameter into the collection. Returns the inserted document."""
+		return get_by_objectId(self.collection.insert(document_dict))
 	
 	def bulk_insert(self, list_of_dict):
 		"""Inserts into collection all documents represented by dictionaries in list_of_dict. Returns list of ObjectIds for inserted documents."""
@@ -21,9 +21,9 @@ class MongoCollection:
 		"""Returns a list of dictionaries representing all documents in collectin"""
 		return list(self.collection.find())
 	
-	def get_by_id(self, id):
+	def get_by_objectId(self, objectId):
 		"""Returns a dictionary of the document with the provided object id"""
-		return self.collection.find_one({'_id': bson.ObjectId(id)})
+		return self.collection.find_one({'_id': bson.ObjectId(objectId)})
 		
 	def get_by_field_value(self, field, value):
 		"""Returns a list of dictionaries representing all documents with field = value"""
