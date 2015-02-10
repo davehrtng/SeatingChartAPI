@@ -1,5 +1,6 @@
 from flask.ext.restful import Resource, reqparse, fields, marshal
 from flask import abort
+from data_access import student_collection
 
 students = [
 	{
