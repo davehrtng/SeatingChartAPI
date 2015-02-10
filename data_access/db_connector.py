@@ -11,7 +11,7 @@ class MongoCollection:
 	
 	def insert(self, document_dict):
 		"""Inserts a document represented by the parameter into the collection. Returns the inserted document."""
-		return get_by_objectId(self.collection.insert(document_dict))
+		return self.get_by_objectId(self.collection.insert(document_dict))
 	
 	def bulk_insert(self, list_of_dict):
 		"""Inserts into collection all documents represented by dictionaries in list_of_dict. Returns list of ObjectIds for inserted documents."""

@@ -20,6 +20,8 @@ students = [
 	}
 ]
 
+# TODO: make ID automatically assigned by mongo when POSTing
+
 student_fields = {
 	'lastName':fields.String,
 	'firstName':fields.String,
@@ -29,6 +31,7 @@ student_fields = {
 class StudentsApi(Resource):
 	def __init__(self):
 		self.reqparse = reqparse.RequestParser()
+		self.reqparse.add_argument('id', type = int, required = True, help = 'You must provide an id', location = 'json')
 		self.reqparse.add_argument('lastName', type = str, required = True, help = 'lastName field is required', location = 'json')
 		self.reqparse.add_argument('firstName', type = str, required = True, help = 'firstName field is required', location = 'json')
 		super(StudentsApi, self).__init__()
@@ -39,12 +42,11 @@ class StudentsApi(Resource):
 	def post(self):
 		args = self.reqparse.parse_args()
 		student = {
-			'id': len(students) + 1,
+			'id': args['id'],
 			'lastName':args['lastName'],
 			'firstName':args['firstName']
 		}
-		students.append(student)
-		return {'student':marshal(student, student_fields)}, 201
+		return {'student':marshal(student_collection.insert(student), student_fields)}, 201
 	
 class StudentsByIdApi(Resource):
 	def __init__(self):
