@@ -2,24 +2,6 @@ from flask.ext.restful import Resource, reqparse, fields, marshal
 from flask import abort
 from data_access import student_collection
 
-students = [
-	{
-		'id':1,
-		'lastName':'Harting',
-		'firstName':'David'
-	},
-	{
-		'id':2,
-		'lastName':'Phillips',
-		'firstName':'Reggie'
-	},
-	{
-		'id':3,
-		'lastName':'Palmer',
-		'firstName':'Arnold'
-	}
-]
-
 # TODO: make ID automatically assigned by mongo when POSTing
 
 student_fields = {
@@ -27,6 +9,11 @@ student_fields = {
 	'firstName':fields.String,
 	'uri':fields.Url('student')
 }
+
+# TODO: add error handlers
+# for 404, message should identify when the URL was correct but the ID was simply not found
+# e.g., when someone requests to GET /students/16 and there is no student with ID 16, then we need to tell the user
+# that there URL was formatted fine, we just don't have a student with that ID number
 
 class StudentsApi(Resource):
 	def __init__(self):
