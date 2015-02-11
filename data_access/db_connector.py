@@ -30,8 +30,13 @@ class MongoCollection:
 		return list(self.collection.find({field:value}))
 		
 	def update(self, query_dict, update_dict):
-		"""Updates all documents matching query_dict to have values in update_dict. Returns number of modified documents."""
-		return self.collection.update(query_dict, {"$set": update_dict}, multi=True, upsert=False)
+		"""Updates all documents matching query_dict to have values in update_dict. Returns a dictionary with number_matched and number_modified, 
+		referring to the number of documents affected by the update."""
+		result_dict = self.collection.update(query_dict, {"$set": update_dict}, multi=True, upsert=False)
+		return {
+			'number_matched':result_dict['n'],
+			'number_modified':result_dict['nModified']
+		}
 	
 	def delete(self, query_dict, multi):
 		"""Removes document(s) matching the query_dict from the collection. If multi is False, then removes at most 1 document."""

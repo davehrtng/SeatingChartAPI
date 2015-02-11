@@ -63,10 +63,16 @@ class StudentsByIdApi(Resource):
 		
 	def put(self, id):
 		args = self.reqparse.parse_args()
-		result = student_collection.update({'id':id}, args)
-		if result['nMatched'] == 0:
+		# create and fill up an update dictionary this way to avoid rather than just pass along whatever they send us to the db
+		update_dict = {}
+		for key in student_fields:
+			if key in args and args[key] is not None:
+				update_dict[key] = args[key]
+				
+		result = student_collection.update({'id':id}, update_dict)
+		if result['number_matched'] == 0:
 			return {'message':'No resources had the provided id'}, 400
-		elif ['nMOdified'] == 0:
+		elif ['number_modified'] == 0:
 			return {'message':'Resource already matched your requested changes'}, 200
 		else:
 			return {}, 204
