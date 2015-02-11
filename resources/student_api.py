@@ -78,9 +78,11 @@ class StudentsByIdApi(Resource):
 			return {}, 204
 		
 	def delete(self, id):
-		student = [s for s in students if s['id'] == id]
-		if len(student) == 0:
-			abort(404) # did not find resource with matching id
-		students.remove(student[0])
-		return {'isRemoved':True}
+		"""Remove all students with matching id from the database.
+		Returns status 204 if resource was found and deleted. Returns status 404 if the resource was not found."""
+		number_deleted = student_collection.delete({'id':id}, True)
+		if number_deleted <= 0:
+			abort(404)
+		else:
+			return {}, 204
 		

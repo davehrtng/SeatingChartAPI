@@ -39,5 +39,6 @@ class MongoCollection:
 		}
 	
 	def delete(self, query_dict, multi):
-		"""Removes document(s) matching the query_dict from the collection. If multi is False, then removes at most 1 document."""
-		self.collection.remove(query_dict, multi);
+		"""Removes document(s) matching the query_dict from the collection. If multi is False, then removes at most 1 document.
+		Returns the number of documents deleted."""
+		return self.collection.remove(query_dict, multi)['n'];
