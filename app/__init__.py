@@ -8,7 +8,5 @@ app = Flask(__name__)
 cors = CORS(app)
 api = Api(app)
 
-
-
 api.add_resource(StudentsByIdApi, '/students/<int:id>', endpoint = 'student')
 api.add_resource(StudentsApi, '/students', endpoint = 'students')
