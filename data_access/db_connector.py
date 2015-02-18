@@ -25,9 +25,9 @@ class MongoCollection:
 		"""Returns a dictionary of the document with the provided object id"""
 		return self.collection.find_one({'_id': bson.ObjectId(objectId)})
 		
-	def get_by_field_value(self, field, value):
+	def get_matching(self, query_dict):
 		"""Returns a list of dictionaries representing all documents with field = value"""
-		return list(self.collection.find({field:value}))
+		return list(self.collection.find(query_dict))
 		
 	def update(self, query_dict, update_dict):
 		"""Updates all documents matching query_dict to have values in update_dict. Returns a dictionary with number_matched and number_modified, 
