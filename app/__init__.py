@@ -6,6 +6,9 @@ from resources.student_api import StudentsByIdApi
 
 app = Flask(__name__)
 cors = CORS(app)
+
+from routes import search
+
 api = Api(app)
 
 api.add_resource(StudentsByIdApi, '/students/<int:id>', endpoint = 'student')
