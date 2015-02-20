@@ -4,7 +4,7 @@ from data_access import student_collection
 
 # TODO: make ID automatically assigned by mongo when POSTing
 
- student_fields = {
+student_fields = {
  	'lastName':fields.String,
  	'firstName':fields.String,
  	'uri':fields.Url('student')
