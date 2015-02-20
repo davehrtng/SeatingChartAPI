@@ -4,6 +4,11 @@ from data_access import student_collection
 
 # TODO: make ID automatically assigned by mongo when POSTing
 
+ student_fields = {
+ 	'lastName':fields.String,
+ 	'firstName':fields.String,
+ 	'uri':fields.Url('student')
+ }
 
 # TODO: add error handlers
 # for 404, message should identify when the URL was correct but the ID was simply not found
