@@ -10,7 +10,7 @@ import string
 def load_trie():
 	student_list = student_collection.get_all()
 	for s in student_list:
-		student_trie[s['lastName']] = s
+		student_trie[s['lastName'].lower()] = s
 
 def make_student_uri(student_id):
 	return uri_base + '/' + str(student_id)
@@ -29,7 +29,7 @@ def make_public_student(student):
 def student_search_lastname(query):
 	return make_response(jsonify(
 		{
-			'students':[make_public_students(s) for s in student_trie.values(query)]
+			'students':[make_public_student(s) for s in student_trie.values(query.lower())]
 		}), 200);
 	
 @app.route('/students/search/<query>', methods=['GET'])
