@@ -1,6 +1,6 @@
 from flask.ext.restful import Resource, reqparse, fields, marshal
 from flask import abort
-from data_access import student_collection
+from data_access import classes_collection
 
 # TODO: make ID automatically assigned by mongo when POSTing
 
