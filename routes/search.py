@@ -4,13 +4,22 @@
 from flask import make_response, jsonify
 from app import app
 from data_access import student_collection
+import datrie
+
+uri_base = "/students"
+
+def make_student_uri(student_id):
+	return uri_base + '/' + str(student_id)
+	
 
 def make_public_student(student):
 	# TODO: should have a uri field instead of id field
 	public_student = {}
-	for key in student:
-		if key != '_id':
-			public_student[key] = student[key]
+	for key, value in student.items():
+		if key == 'id':
+			public_student['uri'] = make_student_uri(value)
+		elif key != '_id':
+			public_student[key] = value
 	return public_student
 
 @app.route('/students/search/<query>', methods=['GET'])
