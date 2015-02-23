@@ -4,3 +4,5 @@
 from data_access.db_connector import MongoCollection 
 
 student_collection = MongoCollection('localhost', 27017, 'SeatingChartApp', 'students')
+
+classes_collection = MongoCollection('localhost', 27017, 'SeatingChartpApp', 'classes')
