@@ -5,11 +5,7 @@ from flask import make_response, jsonify
 from app import app
 from data_access import student_collection
 import datrie
-
-uri_base = "/students"
-
-student_trie = datrie.Trie(string.ascii_lowercase)
-load_trie()
+import string
 
 def load_trie():
 	student_list = student_collection.get_all()
@@ -29,7 +25,7 @@ def make_public_student(student):
 			public_student[key] = value
 	return public_student
 
-@app.route('students/search/lastname/<query>', methods=['GET'])
+@app.route('/students/search/lastname/<query>', methods=['GET'])
 def student_search_lastname(query):
 	return make_response(jsonify(
 		{
@@ -45,3 +41,9 @@ def student_search(query):
 		{
 			'students':[make_public_student(s) for s in student_collection.get_by_regex(query_dict, False)]
 		}), 200)
+		
+#run when file is loaded 
+uri_base = "/students"
+
+student_trie = datrie.Trie(string.ascii_lowercase)
+load_trie()
