@@ -7,10 +7,21 @@ from data_access import student_collection
 import datrie
 import string
 
+def clear_trie():
+	"""Remove all key-value pairs from trie"""
+	for key in student_trie.keys():
+		del student_trie[key]
+
+# need to do this periodically. preferabbly after every update to the mongo db, but mongo doesn't support triggers
+# so run every x seconds - maybe every minute
+# should be able to do that with threading.Timer, but I cannot get that to work for some reason		
 def load_trie():
+	"""Load all students from database into the trie"""
+	clear_trie()
 	student_list = student_collection.get_all()
 	for s in student_list:
 		student_trie[s['lastName'].lower()] = s
+	
 
 def make_student_uri(student_id):
 	return uri_base + '/' + str(student_id)
