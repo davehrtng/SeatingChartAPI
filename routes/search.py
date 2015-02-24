@@ -2,27 +2,20 @@
 # I would rather put the searches with the resources, but the app module imports resources, and I need to import app to add non-resource oriented routes
 
 from flask import make_response, jsonify
-from app import app
 from data_access import student_collection
+from app import app
 import datrie
 import string
-
-def clear_trie():
-	"""Remove all key-value pairs from trie"""
-	for key in student_trie.keys():
-		del student_trie[key]
 
 # need to do this periodically. preferabbly after every update to the mongo db, but mongo doesn't support triggers
 # so run every x seconds - maybe every minute
 # should be able to do that with threading.Timer, but I cannot get that to work for some reason		
 def load_trie():
 	"""Load all students from database into the trie"""
-	clear_trie()
 	student_list = student_collection.get_all()
 	for s in student_list:
 		student_trie[s['lastName'].lower()] = s
 	
-
 def make_student_uri(student_id):
 	return uri_base + '/' + str(student_id)
 
@@ -55,6 +48,5 @@ def student_search(query):
 		
 #run when file is loaded 
 uri_base = "/students"
-
 student_trie = datrie.Trie(string.ascii_lowercase)
 load_trie()
