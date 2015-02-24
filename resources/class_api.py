@@ -1,6 +1,6 @@
 from flask.ext.restful import Resource, reqparse, fields, marshal
 from flask import abort
-#from data_access import classes_collection
+from data_access import classes_collection
 
 # TODO: make ID automatically assigned by mongo when POSTing
 
@@ -15,7 +15,7 @@ class ClassesApi(Resource):
 		self.reqparse = reqparse.RequestParser()
 		self.reqparse.add_argument('id', type = int, required = True, help = 'You must provide an id', location = 'json')
 		self.reqparse.add_argument('name', type = str, required = True, help = 'name field is required', location = 'json')
-		self.reqparse.add_argument('students', type = List, required = True, help = 'students field is required', location = 'json')
+		self.reqparse.add_argument('students', type = list, required = True, help = 'students field is required', location = 'json')
 		super(ClassesApi, self).__init__()
 		
 	def get(self):
@@ -34,20 +34,20 @@ class ClassesByIdApi(Resource):
 	def __init__(self):
 		self.reqparse = reqparse.RequestParser()
 		self.reqparse.add_argument('name', type=str, required = False, help = 'name must be a string', location = 'json')
-		self.reqparse.add_argument('students', type=List, required = False, help = 'must provide students: list of integers', location = 'json')
+		self.reqparse.add_argument('students', type=list, required = False, help = 'must provide students: list of integers', location = 'json')
 		super(ClassesByIdApi, self).__init__()
 
 	def get(self, id):
-		classes_list = classes_collection.get_by_field_value('id', id)
+		classes_list = classes_collection.get_matches({'id':id}, True)
 		if len(classes_list) == 0:
 			abort(404) # did not find resource with matching id
-		return {'student': marshal(classes_list[0], classes_list)}
+		return {'student': marshal(classes_list[0], class_fields)}
 		
 	def put(self, id):
 		args = self.reqparse.parse_args()
 		# create and fill up an update dictionary this way to avoid rather than just pass along whatever they send us to the db
 		update_dict = {}
-		for key in classes_fields:
+		for key in class_fields:
 			if key in args and args[key] is not None:
 				update_dict[key] = args[key]
 				

@@ -43,7 +43,7 @@ class StudentsByIdApi(Resource):
 		super(StudentsByIdApi, self).__init__()
 
 	def get(self, id):
-		student_list = student_collection.get_by_field_value('id', id)
+		student_list = student_collection.get_matches({'id':id}, True)
 		if len(student_list) == 0:
 			abort(404) # did not find resource with matching id
 		return {'student': marshal(student_list[0], student_fields)}
